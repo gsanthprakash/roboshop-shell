@@ -6,10 +6,10 @@ N="\e[0m"
 
 MONGODB_HOST=gspaws.online
 
-LOGSDIR=/home/centos/Shell-Script
-SHELL_SCRIPT=$0
+LOGSDIR="/home/centos/Shell-Script"
+SHELL_SCRIPT="$0"
 DATE=$(date +%F)
-LOGFILE=$LOGSDIR/$SHELL_SCRIPT-$DATE.log
+LOGFILE="$LOGSDIR/$SHELL_SCRIPT-$DATE.log"
 
 USERID=$(id -u)
 
