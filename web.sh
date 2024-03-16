@@ -1,36 +1,33 @@
 #!/bin/bash
 
-# Define color codes for better readability
-R="\e[31m"  # Red color
-Y="\e[33m"  # Yellow color
-G="\e[32m"  # Green color
-N="\e[0m"   # Reset color
-
-USERID=$(id -u)
-LOGSDIR=/tmp/
-SCRIPT_NAME=$0
 DATE=$(date +%F)
-LOGFILE=$LOGSDIR/$SCRIPT_NAME-$DATE.log
 
-# Function to validate the result of a command and print status
+R="\e[31m"
+G="\e[32m"
+N="\e[0m"
+
+LOGSDIR=/home/centos/shell-script
+SCRIPT_NAME=$0
+LOGSFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
+
 VALIDATE(){
     if [ $1 -ne 0 ]
-    then
-        echo -e "$2 ...$R FAILED $N"
+    then 
+        echo -e "$2 $R ... failure $N "
         exit 1
     else
-        echo -e "$2 ...$G SUCCESS $N"
+        echo -e "$2 $G ...Success $N "
     fi
 }
 
-# Check if the user is root
+USERID=$(id -u)
+
 if [ $USERID -ne 0 ]
-then 
-    echo -e "$R ERROR: Not root user $N"
+then    
+    echo "ERROR: Not root user"
     exit 1
 else
-    # Inform that the user is root
-    echo -e "$G You are Root USER $N"
+    echo "you are root user"
 fi
 
 # Install nginx
