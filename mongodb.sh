@@ -21,17 +21,8 @@ VALIDATE(){
 }
 
 USERID=$(id -u)
-if [ $USERID -ne 0 ]s
-then
-    echo -e "$R ERROR: please proceed with Root user $N"
-    exit 1
-else
-    echo -e "$G You are root user $N"
-fi
 
-USERID=$(id -u)
-
-if [[ $USERID -ne 0 ]]
+if [ $USERID -ne 0 ]
 then    
     echo "ERROR: Not root user"
     exit 1
