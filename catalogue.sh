@@ -41,7 +41,7 @@ VALIDATE $? "Installing Nodejs"
 useradd -M roboshop &>>$LOGFILE
 VALIDATE $? "useradding to roboshop"
 
-mkdir -vp /app >> &>>$LOGFILE
+mkdir -vp /app &>>$LOGFILE
 VALIDATE $? "app directory adding"
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>>$LOGFILE
