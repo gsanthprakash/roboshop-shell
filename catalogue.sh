@@ -38,7 +38,7 @@ VALIDATE $? "enabling nodejs:18"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing Nodejs"
 
-if [$? -ne 0]
+if [[$? -ne 0]]
 then 
     useradd roboshop
     VALIDATE $? "useradding to roboshop"
@@ -79,5 +79,5 @@ VALIDATE $? "copying the mongo.repo"
 dnf install mongodb-org-shell -y &>>$LOGFILE
 VALIDATE $? "Installing the Mongodb-Org-Shell"
 
-mongo --host $MONGODB_HOST </app/schema/catalogue.js &>>$LOGFILE
+mongo --host mongodb.gspaws.online </app/schema/catalogue.js &>>$LOGFILE
 VALIDATE $? "connecting the mongdb Server"
