@@ -21,13 +21,24 @@ VALIDATE(){
 }
 
 USERID=$(id -u)
-if [$USERID -ne 0]
+if [[$USERID -ne 0]]
 then
-    echo -e $R ERROR: please proceed with Root user $N
+    echo -e "$R ERROR: please proceed with Root user $N"
     exit 1
 else
-    echo -e $G You are root user $N
+    echo -e "$G You are root user $N"
 fi
+
+USERID=$(id -u)
+
+if [[ $USERID -ne 0 ]]
+then    
+    echo "ERROR: Not root user"
+    exit 1
+else
+    echo "you are root user"
+fi
+
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGSFILE
 VALIDATE $? "Copies Mongo.repo to mongo.repos.d folder"
