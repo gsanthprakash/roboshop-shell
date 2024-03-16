@@ -4,7 +4,7 @@ R="\e[31m"
 G="\e[32m"
 N="\e[0m"
 
-MONGODB_HOST=mongodb.gspaws.online
+MONGDB_HOST=mongodb.gspaws.online
 
 USERID=$(id -u)
 LOGSDIR=/tmp/
