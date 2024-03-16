@@ -19,3 +19,6 @@ VALIDATE(){
         [$G You are root user $N]
     fi
 }
+
+yum install mongodb -y &&>>$LOGFILE
+VALIDATE $?
