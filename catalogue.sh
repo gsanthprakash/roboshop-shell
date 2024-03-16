@@ -13,6 +13,8 @@ LOGFILE=$LOGSDIR/$SHELL_SCRIPT-$DATE.log
 
 USERID=$(id -u)
 
+mkdir -p "$LOGSDIR"
+
 if [[ $USERID -ne 0 ]]
 then 
     echo -e "$R ERROR, please proceed with root access $N"
