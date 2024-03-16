@@ -11,7 +11,7 @@ SCRIPT_NAME=$0
 DATE=$(date +%F)
 LOGFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
 
-VALIDATION(){
+VALIDATE(){
     if [ $1 -ne 0 ]
     then
         echo -e " $R $2 ...FAILED $N "
