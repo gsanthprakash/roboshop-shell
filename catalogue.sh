@@ -79,5 +79,5 @@ VALIDATE $? "copying the mongo.repo"
 dnf install mongodb-org-shell -y &>>$LOGFILE
 VALIDATE $? "Installing the Mongodb-Org-Shell"
 
-mongo --host mongodb.gspaws.online </app/schema/catalogue.js &>>$LOGFILE
+mongo --host 3.228.220.197 </app/schema/catalogue.js &>>$LOGFILE
 VALIDATE $? "connecting the mongdb Server"
