@@ -38,7 +38,7 @@ VALIDATE $? "enabling nodejs:18"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing Nodejs"
 
-id robosho # if roboshop user does not exists, then it is failure.
+id roboshop # if roboshop user does not exists, then it is failure.
 if [[ $? -ne 0 ]]
 then 
     useradd roboshop
