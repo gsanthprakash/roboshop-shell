@@ -29,20 +29,20 @@ else
     echo -e $G You are root user $N
 fi
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFILE
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGSFILE
 VALIDATE $? "Copies Mongo.repo to mongo.repos.d folder"
 
-yum install mongodb-org -y &>>$LOGFILE
+yum install mongodb-org -y &>>$LOGSFILE
 VALIDATE $? "Installed Mongodb-org" 
 
-systemctl enable mongod &>>$LOGFILE
+systemctl enable mongod &>>$LOGSFILE
 VALIDATE $? "Enabled mongdb"
 
-systemctl start mongod &>>$LOGFILE
+systemctl start mongod &>>$LOGSFILE
 VALIDATE $? "Started the mongodb"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOGSFILE
 VALIDATE $? "edited the sed editor"
 
-systemctl restart mongod &>>$LOGFILE
+systemctl restart mongod &>>$LOGSFILE
 VALIDATE $? "Restarted the Mongodb"
