@@ -76,8 +76,8 @@ VALIDATE $? "Starting the catalogue"
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOGFILE
 VALIDATE $? "copying the mongo.repo"
 
-dnf install mongodb-org-shell -y &>>$LOGFILE
-VALIDATE $? "Installing the Mongodb-Org-Shell"
+dnf install mongodb-org-shell -y &>> $LOGFILE
+VALIDATE $? "Installing MongoDB client
 
 mongo --host 3.228.220.197 </app/schema/catalogue.js &>>$LOGFILE
 VALIDATE $? "connecting the mongdb Server"
