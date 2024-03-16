@@ -38,7 +38,7 @@ VALIDATE $? "enabling nodejs:18"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing Nodejs"
 
-if [[$? -ne 0]]
+if [[ $? -ne 0 ]]
 then 
     useradd roboshop
     VALIDATE $? "useradding to roboshop"
