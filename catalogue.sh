@@ -7,7 +7,7 @@ N="\e[0m"
 MONGODB_HOST=mongodb.gspaws.online
 
 USERID=$(id -u)
-LOGSDIR=/home/centos/Shell_Script
+LOGSDIR=/tmp/
 SHELL_SCRIPT=$0
 DATE=$(date +%F)
 LOGFILE="$LOGSDIR/$SHELL_SCRIPT-$DATE.log"
