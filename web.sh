@@ -28,10 +28,10 @@ if [ $USERID -ne 0 ]
 then 
     echo -e "$R ERROR: Not root user $N"
     exit 1
+else
+    # Inform that the user is root
+    echo -e "$G You are Root USER $N"
 fi
-
-# Inform that the user is root
-echo -e "\n$G You are Root USER $N"
 
 # Install nginx
 dnf install nginx -y &>> $LOGFILE
