@@ -1,61 +1,70 @@
 #!/bin/bash
 
-R="\e[31m"
-Y="\e[32m"
-G="\e[33m"
-N="\e[0m"
+# Define color codes for better readability
+R="\e[31m"  # Red color
+Y="\e[33m"  # Yellow color
+G="\e[32m"  # Green color
+N="\e[0m"   # Reset color
 
 USERID=$(id -u)
 LOGSDIR=/tmp/
 SCRIPT_NAME=$0
 DATE=$(date +%F)
-LOGFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
+LOGFILE=$LOGSDIR/$SCRIPT_NAME-$DATE.log
 
+# Function to validate the result of a command and print status
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$2 ...$R FAILED $N "
+        echo -e "$2 ...$R FAILED $N"
         exit 1
     else
-        echo -e "$2 ...$G SUCCESS $N "
+        echo -e "$2 ...$G SUCCESS $N"
     fi
 }
 
+# Check if the user is root
 if [ $USERID -ne 0 ]
 then 
     echo -e "$R ERROR: Not root user $N"
     exit 1
-echo
-    echo -e "$G You are Root USER $N"
 fi
 
+# Inform that the user is root
+echo -e "\n$G You are Root USER $N"
+
+# Install nginx
 dnf install nginx -y &>> $LOGFILE
-VALIDATE $? "Installing the nginx"
+VALIDATE $? "Installing nginx"
 
+# Enable nginx
 systemctl enable nginx &>> $LOGFILE
-VALIDATE $? "enabling nginx"
+VALIDATE $? "Enabling nginx"
 
+# Start nginx
 systemctl start nginx &>> $LOGFILE
-VALIDATE $? "starting the nginx"
+VALIDATE $? "Starting nginx"
 
+# Remove default nginx content
 rm -rf /usr/share/nginx/html/* &>> $LOGFILE
-VALIDATE $? "removing the default nginx"
+VALIDATE $? "Removing default nginx content"
 
+# Download roboshop builds
 curl -o /tmp/web.zip https://roboshop-builds.s3.amazonaws.com/web.zip &>> $LOGFILE
-VALIDATE $? "download the roboshop builds"
+VALIDATE $? "Downloading roboshop builds"
 
+# Move to nginx directory
 cd /usr/share/nginx/html &>> $LOGFILE
-VALIDATE $? "moving to nginx directory"
+VALIDATE $? "Moving to nginx directory"
 
+# Unzip roboshop builds
 unzip -o /tmp/web.zip &>> $LOGFILE
-VALIDATE $? "unzipping the web.zip"
+VALIDATE $? "Unzipping web.zip"
 
+# Copy roboshop.conf to nginx configuration
 cp /home/centos/roboshop-shell/roboshop.conf /etc/nginx/default.d/roboshop.conf &>> $LOGFILE
-VALIDATE $? "copying the roboshop.conf"
+VALIDATE $? "Copying roboshop.conf"
 
+# Restart nginx
 systemctl restart nginx &>> $LOGFILE
-VALIDATE $? "restaring the nginx"
-
-
-
-
+VALIDATE $? "Restarting nginx"
