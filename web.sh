@@ -14,19 +14,19 @@ LOGFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e " $R $2 ...FAILED $N "
+        echo -e "$2 ...$R FAILED $N "
         exit 1
     else
-        echo -e " $G $2 ...SUCCESS $N "
+        echo -e "$2 ...$G SUCCESS $N "
     fi
 }
 
 if [ $USERID -ne 0 ]
 then 
-    echo -e " $R installation failure $N "
+    echo -e "$R ERROR: Not root user $N"
     exit 1
 echo
-    echo -e " $G installation success $N "
+    echo -e "$G You are Root USER $N"
 fi
 
 dnf install nginx -y &>> $LOGFILE
