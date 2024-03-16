@@ -8,7 +8,7 @@ N="\e[0m"
 
 LOGSDIR=/home/centos/shell-script
 SCRIPT_NAME=$0
-LOGSFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
+LOGFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
 
 VALIDATE(){
     if [ $1 -ne 0 ]
