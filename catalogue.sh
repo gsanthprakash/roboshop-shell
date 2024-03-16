@@ -11,7 +11,7 @@ SHELL_SCRIPT="$0"
 DATE=$(date +%F)
 LOGFILE="$LOGSDIDR/$SHELL_SCRIPT-$DATE.log"
 
-USERID$(id -u)
+USERID=$(id -u)
 
 if [[ $USERID -ne 0 ]]
 then 
