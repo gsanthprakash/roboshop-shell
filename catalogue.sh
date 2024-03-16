@@ -6,10 +6,10 @@ N="\e[0m"
 
 MONGODB_HOST=gspaws.online
 
-LOGSDIR="/home/centos/Shell-Script"
-SHELL_SCRIPT="$0"
+LOGSDIR=/home/centos/gsp
+SHELL_SCRIPT=$0
 DATE=$(date +%F)
-LOGFILE="$LOGSDIR/$SHELL_SCRIPT-$DATE.log"
+LOGFILE=$LOGSDIR/$SHELL_SCRIPT-$DATE.log
 
 USERID=$(id -u)
 
@@ -79,5 +79,5 @@ VALIDATE $? "copying the mongo.repo"
 dnf install mongodb-org-shell -y &>> $LOGFILE
 VALIDATE $? "Installing MongoDB client"
 
-mongo --host 3.228.220.197 </app/schema/catalogue.js &>>$LOGFILE
+mongo --host $MONGODB_HOST </app/schema/catalogue.js &>>$LOGFILE
 VALIDATE $? "connecting the mongdb Server"
