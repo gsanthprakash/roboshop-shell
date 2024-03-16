@@ -13,12 +13,20 @@ LOGSFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
 
 if [$USERID -ne 0]
 then
-    echo $R ERROR: please proceed with Root user $N
+    echo -e $R ERROR: please proceed with Root user $N
     exit 1
 else
-    echo $G You are root user $N
+    echo -e $G You are root user $N
 fi
 
+VALIDATE(){
+    if [$1 -ne 0]
+    then 
+        echo -e "$2 $R ... failure"
+        exit 1
+    else
+        echo 0-e "$2 $G ...Success"
+}
 
 yum install mongodb -y &&>>$LOGFILE
 VALIDATE $?
