@@ -8,7 +8,7 @@ N="\e[0m"
 
 LOGSDIR=/home/centos/shell-script
 SCRIPT_NAME=$0
-LOGFILE=$LOGSDIR/$SCRIPT_NAME-$DATE.log
+LOGFILE=$LOGSDIDR/$SCRIPT_NAME-$DATE.log
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -27,7 +27,7 @@ then
     echo "ERROR: Not root user"
     exit 1
 else
-    echo "You are root user"
+    echo "you are root user"
 fi
 
 dnf module disable nodejs -y &>> $LOGFILE
@@ -42,41 +42,41 @@ dnf install nodejs -y  &>> $LOGFILE
 
 VALIDATE $? "Installing NodeJS:18"
 
-id roboshop &>/dev/null
+id roboshop #if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
 then
-    useradd -m roboshop
+    useradd roboshop
     VALIDATE $? "roboshop user creation"
 else
-    echo -e "roboshop user already exists ${G}SKIPPING${N}"
+    echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
 mkdir -p /app
 
-VALIDATE $? "Creating app directory"
+VALIDATE $? "creating app directory"
 
 curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
 
 VALIDATE $? "Downloading cart application"
 
-cd /app || exit
+cd /app 
 
 unzip -o /tmp/cart.zip  &>> $LOGFILE
 
-VALIDATE $? "Unzipping cart"
+VALIDATE $? "unzipping cart"
 
 npm install  &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-# Use absolute path because cart.service exists there
+# use absolute, because cart.service exists there
 cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
 
 VALIDATE $? "Copying cart service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VALIDATE $? "Cart daemon reload"
+VALIDATE $? "cart daemon reload"
 
 systemctl enable cart &>> $LOGFILE
 
