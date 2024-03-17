@@ -39,7 +39,7 @@ VALIDATE $? "enabling redis"
 dnf install redis -y &>> $LOGFILE
 VALIDATE $? "Installating Redis"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>> $LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "Editing the SED editor by updating IP"
 
 systemctl enable redis &>> $LOGFILE
