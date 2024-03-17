@@ -31,24 +31,6 @@ else
 fi
 
 dnf module disable nodejs -y &>> $LOGFILE
-VALIDATE $? "disabling nodejs present version"
-
-dnf module enable nodejs:18 -y &>> $LOGFILE
-VALIDATE $? "Enabling nodej:18 Version"
-
-dnf install nodejs -y &>> $LOGFILE
-VALIDATE $? "Installing Nodejs"
-
-id roboshop &>> $LOGFILE
-if [ $? -ne 0 ]
-then 
-    useradd roboshop
-    VALIDATE $? "roboshop user creation"
-else
-    echo "already created user, skipping"
-fi
-
-dnf module disable nodejs -y &>> $LOGFILE
 
 VALIDATE $? "Disabling current NodeJS"
 
