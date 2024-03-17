@@ -31,46 +31,57 @@ else
 fi
 
 dnf module disable nodejs -y &>> $LOGFILE
-VALIDATE $? "disabling current nodejs package"
 
-dnf module enable nodejs:18 -y &>> $LOGFILE
-VALIDATE $? "enabling nodejs:18"
+VALIDATE $? "Disabling current NodeJS"
 
-dnf install nodejs -y &>> $LOGFILE
-VALIDATE $? "Installing the nodejs"
+dnf module enable nodejs:18 -y  &>> $LOGFILE
 
-id roboshop
+VALIDATE $? "Enabling NodeJS:18"
+
+dnf install nodejs -y  &>> $LOGFILE
+
+VALIDATE $? "Installing NodeJS:18"
+
+id roboshop #if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
 then
-    useradd roboshop &>> $LOGFILE
-    VALIDATE $? "user added"
+    useradd roboshop
+    VALIDATE $? "roboshop user creation"
 else
-    echo "user already crated, skipped"
+    echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app &>> $LOGFILE
-VALIDATE $? "app directory created"
+mkdir -p /app
 
-curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
-VALIDATE $? "downloading the cart zip file"
+VALIDATE $? "creating app directory"
 
-cd /app &>> $LOGFILE
-VALIDATE $? "moving to app folder"
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
 
-unzip -o /tmp/cart.zip &>> $LOGFILE
-VALIDATE $? "unzipping the cart"
+VALIDATE $? "Downloading cart application"
+
+cd /app 
+
+unzip -o /tmp/cart.zip  &>> $LOGFILE
+
+VALIDATE $? "unzipping cart"
 
 npm install  &>> $LOGFILE
-VALIDATE $? "dependencies are installed"
 
+VALIDATE $? "Installing dependencies"
+
+# use absolute, because cart.service exists there
 cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
-VALIDATE $? "copying the cart.service file"
+
+VALIDATE $? "Copying cart service file"
 
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "system demaon reloading"
 
-systemctl enable cart  &>> $LOGFILE
-VALIDATE $? "enabling the cart"
+VALIDATE $? "cart daemon reload"
+
+systemctl enable cart &>> $LOGFILE
+
+VALIDATE $? "Enable cart"
 
 systemctl start cart &>> $LOGFILE
-VALIDATE $? "starting the cart"
+
+VALIDATE $? "Starting cart"
