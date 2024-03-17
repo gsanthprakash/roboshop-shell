@@ -75,7 +75,7 @@ VALIDATE $? "enabling user"
 systemctl start user &>> $LOGFILE
 VALIDATE $? "starting user"
 
-cp /home/centos/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 VALIDATE $? "copying the mongo.repo"
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
