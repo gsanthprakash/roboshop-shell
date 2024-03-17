@@ -48,38 +48,69 @@ else
     echo "already created user, skipping"
 fi
 
-mkdir -p /app &>> $LOGFILE
-VALIDATE $? "directory app created"
+dnf module disable nodejs -y &>> $LOGFILE
 
-curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
-VALIDATE $? "downloading the user package"
+VALIDATE $? "Disabling current NodeJS"
 
-cd /app  &>> $LOGFILE
-VALIDATE $? "moving to directory app"
+dnf module enable nodejs:18 -y  &>> $LOGFILE
 
-unzip -o /tmp/user.zip &>> $LOGFILE
-VALIDATE $? "uzipping the user package"
+VALIDATE $? "Enabling NodeJS:18"
+
+dnf install nodejs -y  &>> $LOGFILE
+
+VALIDATE $? "Installing NodeJS:18"
+
+id roboshop #if roboshop user does not exist, then it is failure
+if [ $? -ne 0 ]
+then
+    useradd roboshop
+    VALIDATE $? "roboshop user creation"
+else
+    echo -e "roboshop user already exist $Y SKIPPING $N"
+fi
+
+mkdir -p /app
+
+VALIDATE $? "creating app directory"
+
+curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip  &>> $LOGFILE
+
+VALIDATE $? "Downloading user application"
+
+cd /app 
+
+unzip -o /tmp/user.zip  &>> $LOGFILE
+
+VALIDATE $? "unzipping user"
 
 npm install  &>> $LOGFILE
-VALIDATE $? "npm install"
 
-cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service &>> $LOGFILE
-VALIDATE $? "copying the user.service file"
+VALIDATE $? "Installing dependencies"
+
+cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service
+
+VALIDATE $? "Copying user service file"
 
 systemctl daemon-reload &>> $LOGFILE
-VALIDATE $? "deamon-reloading"
 
-systemctl enable user  &>> $LOGFILE
-VALIDATE $? "enabling user"
+VALIDATE $? "user daemon reload"
+
+systemctl enable user &>> $LOGFILE
+
+VALIDATE $? "Enable user"
 
 systemctl start user &>> $LOGFILE
-VALIDATE $? "starting user"
 
-cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
-VALIDATE $? "copying the mongo.repo"
+VALIDATE $? "Starting user"
+
+cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
+
+VALIDATE $? "copying mongodb repo"
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
-VALIDATE $? "installing the mongodb-org-shell"
+
+VALIDATE $? "Installing MongoDB client"
 
 mongo --host mongodb.gspaws.online </app/schema/user.js &>> $LOGFILE
-VALIDATE $? "downloading the user schema"
+
+VALIDATE $? "Loading user data into MongoDB"
