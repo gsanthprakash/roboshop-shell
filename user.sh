@@ -48,13 +48,16 @@ else
     echo "already created user, skipping"
 fi
 
+mkdir /app &>> $LOGFILE
+VALIDATE $? "directory app created"
+
 curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
 VALIDATE $? "downloading the user package"
 
 cd /app  &>> $LOGFILE
 VALIDATE $? "moving to directory app"
 
-unzip /tmp/user.zip &>> $LOGFILE
+unzip -o /tmp/user.zip &>> $LOGFILE
 VALIDATE $? "uzipping the user package"
 
 npm install  &>> $LOGFILE
