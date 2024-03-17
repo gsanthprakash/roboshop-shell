@@ -46,6 +46,7 @@ then
     VALIDATE $? "roboshop user creation"
 else
     echo "already created user, skipping"
+fi
 
 curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
 VALIDATE $? "downloading the user package"
