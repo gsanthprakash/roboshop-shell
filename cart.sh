@@ -57,7 +57,7 @@ VALIDATE $? "downloading the cart zip file"
 cd /app &>> $LOGFILE
 VALIDATE $? "moving to app folder"
 
-unzip /tmp/cart.zip &>> $LOGFILE
+unzip -o /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "unzipping the cart"
 
 npm install  &>> $LOGFILE
